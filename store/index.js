@@ -10,6 +10,13 @@ const store = new Vuex.Store({
 		changeActiveTabIndex(state, newIndex) {
 			state.activeTabIndex = newIndex;
 		}
+	},
+	actions: {
+		changeActiveTabIndex({
+			commit
+		}, newIndex) {
+			commit('changeActiveTabIndex', newIndex);
+		}
 	}
 });
 

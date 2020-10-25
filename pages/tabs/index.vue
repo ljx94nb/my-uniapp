@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<swiper :style="'min-height:'+height+'px'" current="activeTabIndex" duration="0" @change="swiperChange">
+		<swiper :style="'min-height:'+height+'px'" :current="activeTabIndex" duration="0" @change="swiperChange">
 			<swiper-item>
-				<view class="swiper-item">首页</view>
+				<Home />
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item" style="background-color: #20D785;">分类</view>
@@ -10,37 +10,37 @@
 			<swiper-item>
 				<view class="swiper-item" style="background-color: #6641E2;">购物车</view>
 			</swiper-item>
-			<swiper-item>
-				<view class="swiper-item" style="background-color: #FF4081;">我的</view>
-			</swiper-item>
 		</swiper>
-		<tabbar activeTabIndex="activeTabIndex" changeActiveTabIndex="changeActiveTabIndex"></tabbar>
+		<tab-bar :activeTabIndex="activeTabIndex" :changeActiveTabIndex="changeActiveTabIndex" />
 	</view>
 </template>
 
 <script>
-	import tabbar from '@/components/tabbar/index.vue';
+	import TabBar from '@/myComponents/TabBar/index.vue';
+	import Home from '@/myComponents/Home/index.vue';
 	import {
 		mapState,
-		mapMutations
+		mapActions
 	} from 'vuex';
 
 	export default {
 		data() {
 			return {
+				active: 0,
 				height: 0
 			}
 		},
 		components: {
-			tabbar
+			TabBar,
+			Home
 		},
 		computed: {
 			...mapState(['activeTabIndex'])
 		},
 		methods: {
-			...mapMutations(['changeActiveTabIndex']),
+			...mapActions(['changeActiveTabIndex']),
 			swiperChange(e) {
-				this.changeActiveTabIndex(this.$store.state, e.detail.current);
+				this.changeActiveTabIndex(e.detail.current);
 			}
 		},
 		onLoad: function() {
@@ -55,8 +55,6 @@
 </script>
 
 <style>
-	@import "@/common/icon.css";
-
 	.swiper-item {
 		display: flex;
 		width: 750rpx;
